@@ -89,33 +89,37 @@ def view_contact():
 
 def add_contact():
     while True:
+        pilih_menu = input('----Contact Data---- \n1. Add Contact\n2.Back to Main Menu\n Choose Menu Number: ')
         default_contact()
-        print('Please fill in the new contact information')
-        input_number_new_phone = input('Enter number: ')
-        while True:
-            if input_number_new_phone.isdigit():
-                break
+        if pilih_menu == '1':
+            print('Please fill in the new contact information')
+            input_number_new_phone = input('Enter number: ')
+            while True:
+                if input_number_new_phone.isdigit():
+                    break
+                else:
+                    print('Please fill the numbers with integers')
+                    input_number_new_phone = input('Enter number: ')
+            if input_number_new_phone not in data_contact.keys():
+                input_sektor = input('Enter Sektor: ')
+                input_name = input('Enter Name: ')
+                input_address = input('Enter Address: ')
+                input_provinsi = input('Enter provinsi: ')
+                input_phone = input_number_new_phone
+                cek = input(f'Are you sure you want to add this all information = {input_sektor},{input_name},{input_address},{input_provinsi},{input_phone} Yes/No: ')
+                if cek.lower() != 'yes':
+                    print('Contact is cancel to add')
+                    break
+                else:
+                    data_contact[input_number_new_phone]={'Sektor' : input_sektor, 'Nama': input_name,'Alamat': input_address,'Provinsi': input_provinsi,'Phone': input_phone}
+                    default_contact()
+                    print('Contact added to list')
+                    break
             else:
-                print('Please fill the numbers with integers')
-                input_number_new_phone = input('Enter number: ')
-        if input_number_new_phone not in data_contact.keys():
-            input_sektor = input('Enter Sektor: ')
-            input_name = input('Enter Name: ')
-            input_address = input('Enter Address: ')
-            input_provinsi = input('Enter provinsi: ')
-            input_phone = input_number_new_phone
-            cek = input(f'Are you sure you want to add this all information = {input_sektor},{input_name},{input_address},{input_provinsi},{input_phone} Yes/No: ')
-            if cek.lower() != 'yes':
-                print('Contact is cancel to add')
-                break
-            else:
-                data_contact[input_number_new_phone]={'Sektor' : input_sektor, 'Nama': input_name,'Alamat': input_address,'Provinsi': input_provinsi,'Phone': input_phone}
-                default_contact()
-                print('Contact added to list')
+                print(f' Number {input_number_new_phone} already in list')
+                add_contact()
                 break
         else:
-            print(f' Number {input_number_new_phone} already in list')
-            add_contact()
             break
 
 
@@ -310,27 +314,32 @@ def update_contact():
     
     
 def delete_contact():
-    default_contact()
-    delete_contact = input('Enter numbers you want to delete: ')
     while True:
-            if delete_contact.isdigit():
+        pilih_menu = input('----Contact Data---- \n1. Delete Contact\n2.Back to Main Menu\n Choose Menu Number: ')
+        default_contact()
+        if pilih_menu =='1':
+            delete_contact = input('Enter numbers you want to delete: ')
+            while True:
+                    if delete_contact.isdigit():
+                        break
+                    else:
+                        print('Please fill the numbers with integers')
+                        delete_contact = input('Enter numbers to update: ')
+            new_delete_contact = delete_contact
+            while new_delete_contact not in data_contact.keys():
+                print('Contact not Found')
                 break
             else:
-                print('Please fill the numbers with integers')
-                delete_contact = input('Enter numbers to update: ')
-    new_delete_contact = delete_contact
-    while new_delete_contact not in data_contact.keys():
-        print('Contact not Found')
-        break
-    else:
-        check_delete = input(f'Are you sure want to delete {delete_contact} ? Yes/No: ')
-        while check_delete.lower() != 'yes':
-            print('Contact not deleted')
-            break
+                check_delete = input(f'Are you sure want to delete {delete_contact} ? Yes/No: ')
+                while check_delete.lower() != 'yes':
+                    print('Contact not deleted')
+                    break
+                else:
+                    del data_contact[new_delete_contact]
+                    default_contact()
+                    print('Contact deleted')
         else:
-            del data_contact[new_delete_contact]
-            default_contact()
-            print('Contact deleted')
+            break
         
 while True:
     pilih_menu = input('''
